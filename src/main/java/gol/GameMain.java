@@ -27,7 +27,7 @@ public class GameMain {
   public static void main(String[] args) {
     ArgParser parser = new ArgParser(args);
     if (parser.isValid()) {
-      String file = (parser.hasFile()) ? parser.getFile() : "start.txt";
+      String file = parser.getFile();
       int turns = parser.getTurns();
       int speed = parser.getSpeed();
       Game game = new Game(System.out, speed);

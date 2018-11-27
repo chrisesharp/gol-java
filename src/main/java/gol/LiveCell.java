@@ -4,11 +4,7 @@ public class LiveCell extends Cell {
   private static final String icon = "*"; 
 
   @Override
-  public Cell evolve() {
-    return survive() ? this : Cell.makeDeadCell();
-  }
-
-  private boolean survive() {
+  public boolean survive() {
     return (this.getLiveNeighbours() == 2 || this.getLiveNeighbours() == 3);
   }
   

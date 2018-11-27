@@ -4,8 +4,10 @@ public abstract class Cell {
   private int numberOfLiveNeighbours = 0;
 
   public Cell evolve() {
-    return null;
+    return survive() ? Cell.makeLiveCell() : Cell.makeDeadCell() ;
   }
+  
+  public abstract boolean survive();
   
   public void setLiveNeighbours(int numberOfLiveNeighbours) {
     this.numberOfLiveNeighbours = numberOfLiveNeighbours;

@@ -10,7 +10,7 @@ public class ArgsTest {
     public void argsParsedCorrectly() {
       String[] args = {"-f","input.txt","-t","10","-s","200"};
       ArgParser parser = new ArgParser(args);
-      String file = (parser.hasFile()) ? parser.getFile() : "start.txt";
+      String file = parser.getFile();
       int turns = parser.getTurns();
       int speed = parser.getSpeed();
       assertEquals("input.txt",file);
@@ -22,7 +22,7 @@ public class ArgsTest {
     public void defaultArgsComputedCorrectly() {
       String[] args = {};
       ArgParser parser = new ArgParser(args);
-      String file = (parser.hasFile()) ? parser.getFile() : "start.txt";
+      String file = parser.getFile();
       int turns = parser.getTurns();
       int speed = parser.getSpeed();
       assertTrue(parser.isValid());
@@ -38,7 +38,7 @@ public class ArgsTest {
       ArgParser parser = new ArgParser(args);
       assertFalse(parser.isValid());
       parser.printUsage(result);
-      String usage = " -f (--file) VAL : Fully qualified path and name of input txt file.\n";
+      String usage = " -f (--file) VAL : Fully qualified path and name of input txt file. (default:\n                   start.txt)\n";
       usage += " -s (--speed) N  : Framerate in miliseconds (default: 100)\n";
       usage += " -t (--turns) N  : Number of turns to run simulation (default: 1)\n";
       assertEquals(usage, result.toString() );

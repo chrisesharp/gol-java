@@ -9,7 +9,7 @@ public class ArgParser {
   private CmdLineParser parser;
   
   @Option(name="-f", aliases="--file", usage="Fully qualified path and name of input txt file.")  
-  private String fileName;   
+  private String fileName = "start.txt";   
   
   @Option(name="-t", aliases="--turns", usage="Number of turns to run simulation")
   private int turns = 1;
