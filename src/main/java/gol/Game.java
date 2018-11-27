@@ -34,12 +34,13 @@ public class Game {
     parseCells(parts[1]);
   }    
      
-  private void parseDimensions(String dimensions) {
+  private void parseDimensions(String input) {
+    String[] dimensions = input.split(" ");
     try {
-        width = Integer.parseInt(dimensions.substring(0,1));
-        height = Integer.parseInt(dimensions.substring(2,3));
+      width = Integer.parseInt(dimensions[0]);
+      height = Integer.parseInt(dimensions[1]);
     } catch (NumberFormatException e) {
-        output.println("Invalid dimensions");
+      output.println("Invalid dimensions");
     }
   }
   
@@ -48,16 +49,13 @@ public class Game {
     for (int y=0; y < rows.length; y++) {
       String row = rows[y];
       for (int x=0; x < row.length(); x++){ 
-        if (row.charAt(x) == '*') {
-            world.addLiveCell(new Location(x,y));
-        }
+        world.addCell(row.substring(x,x+1),new Location(x,y));
       }
     }
   }
   
-  public boolean cellAliveAt(Location location) {
-    Cell cell = world.getCell(location);
-    return cell.isAlive();
+  protected boolean cellAliveAt(Location location) {
+    return world.getCell(location) instanceof LiveCell;
   }
   
   public String render() {

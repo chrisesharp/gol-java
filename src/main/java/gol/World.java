@@ -12,15 +12,21 @@ public class World{
   
   public Cell getCell(Location location) {
     Cell cell = liveCells.get(location);
-    return (cell != null) ? cell : new Cell(false);
+    return (cell != null) ? cell : new DeadCell();
+  }
+  
+  public void addCell(String icon, Location location) {
+    if (LiveCell.isIcon(icon)) {
+      addLiveCell(location);
+    }
   }
   
   public void addLiveCell(Location location) {
-    liveCells.put(location, new Cell());
+    liveCells.put(location, new LiveCell());
   }
   
   private void addBirthingCell(Location location, int neighbours) {
-    Cell cell = new Cell(false);
+    Cell cell = new DeadCell();
     cell.setLiveNeighbours(neighbours);
     birthingCells.put(location, cell);
   }
@@ -51,11 +57,10 @@ public class World{
   }
   
   private void identifyBirthingNeighbours(Location location) {
-    for (Location neighbour: location.getNeighbourhood()) {
-      if (!liveCells.containsKey(neighbour)) {
-        addBirthingCell(neighbour, countLiveNeighbours(neighbour));
-      }
-    }
+    Set<Location> intersection = new HashSet<>(location.getNeighbourhood());
+    intersection.removeAll(liveCells.keySet());
+    intersection.stream()
+      .forEach(neighbour -> addBirthingCell(neighbour, countLiveNeighbours(neighbour)));
   }
   
   private Map<Location, Cell> determineNewPopulation() {
@@ -63,10 +68,10 @@ public class World{
     return liveCells.entrySet()
             .stream()
             .map(entry-> {
-              entry.getValue().evolve();
+              entry.setValue(entry.getValue().evolve());
               return entry;
             })
-            .filter(entry -> entry.getValue().isAlive())
+            .filter(entry -> entry.getValue() instanceof LiveCell)
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 }
