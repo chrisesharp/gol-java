@@ -7,7 +7,7 @@ public class GridTest {
     private Game game = new Game();
 
     @Test
-    public void single_cell_input_grid_is_1x1() {
+    public void singleCellInputGridIs1x1() {
         String input = "1 1\n.\n"; 
         game.parse(input); 
         assertEquals(1, game.width());
@@ -15,7 +15,7 @@ public class GridTest {
     }
     
     @Test
-    public void cell_input_grid_is_2x1() {
+    public void cellInputGridIs2x1() {
         String input = "2 1\n..\n"; 
         game.parse(input); 
         assertEquals(2, game.width());
@@ -23,7 +23,7 @@ public class GridTest {
     }
     
     @Test
-    public void cell_input_grid_is_2x2() {
+    public void cellInputGridIs2x2() {
         String input = "2 2\n..\n..\n"; 
         game.parse(input); 
         assertEquals(2, game.width());
@@ -31,21 +31,21 @@ public class GridTest {
     }
     
     @Test
-    public void cell_input_grid_is_1x1_dead_cell() {
+    public void cellInputGridIs1x1WithDeadCell() {
         String input = "1 1\n.\n"; 
         game.parse(input); 
         assertFalse(game.cellAliveAt(new Location(0,0)));
     }
     
     @Test
-    public void cell_input_grid_is_1x1_live_cell() {
+    public void cellInputGridIs1x1WithLiveCell() {
         String input = "1 1\n*\n"; 
         game.parse(input); 
         assertTrue(game.cellAliveAt(new Location(0,0)));
     }
     
     @Test
-    public void cell_input_grid_is_2x1_with_live_cell() {
+    public void cellInputGridIs2x1WithLiveCell() {
         String input = "2 1\n*.\n"; 
         game.parse(input); 
         assertTrue(game.cellAliveAt(new Location(0,0)));
@@ -53,7 +53,7 @@ public class GridTest {
     }
     
     @Test
-    public void cell_input_grid_is_2x2_with_live_cells() {
+    public void cellInputGridIs2x2With2LiveCells() {
         String input = "2 2\n.*\n.*\n"; 
         game.parse(input); 
         assertFalse(game.cellAliveAt(new Location(0,1)));
@@ -61,7 +61,7 @@ public class GridTest {
     }
     
     @Test
-    public void cell_output_grid_is_1x1() {
+    public void cellOutputGridIs1x1() {
         String input = "1 1\n.\n"; 
         game.parse(input); 
         String output = game.render();
@@ -69,7 +69,7 @@ public class GridTest {
     }
     
     @Test
-    public void cell_output_grid_is_2x1() {
+    public void cellOutputGridIs2x1() {
         String input = "2 1\n..\n"; 
         game.parse(input); 
         String output = game.render();
@@ -77,7 +77,7 @@ public class GridTest {
     }
     
     @Test
-    public void cell_output_grid_is_2x2() {
+    public void cellOutputGridIs2x2() {
         String input = "2 2\n..\n..\n"; 
         game.parse(input); 
         String output = game.render();
@@ -85,7 +85,7 @@ public class GridTest {
     }
     
     @Test
-    public void live_cell_output_grid_is_1x1() {
+    public void cellOutputGridIs1x1WithLiveCell() {
         String input = "1 1\n*\n"; 
         game.parse(input); 
         String output = game.render();
@@ -93,14 +93,13 @@ public class GridTest {
     }
     
     @Test
-    public void live_cell_output_grid_is_2x2() {
+    public void cellOutputGridIs2x2With2LiveCells() {
         String input = "2 2\n.*\n.*\n"; 
         game.parse(input); 
         String output = game.render();
         assertEquals(input, output);
     }
     
-    @Ignore
     @Test
     public void propeller() {
       String input = "3 3\n.*.\n.*.\n.*.\n";

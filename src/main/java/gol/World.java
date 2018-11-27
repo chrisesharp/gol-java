@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.stream.Collectors;
 
 public class World{
-  Map<Location, Cell> liveCells = new HashMap<>();
-  Map<Location, Cell> birthingCells = new HashMap<>();
+  private Map<Location, Cell> liveCells = new HashMap<>();
+  private Map<Location, Cell> birthingCells = new HashMap<>();
   
   public Cell getCell(Location location) {
     Cell cell = liveCells.get(location);
