@@ -5,56 +5,50 @@ import static org.junit.Assert.*;
 
 public class CellTest {
     @Test
-    public void defaultCellStateIsAlive() {
-        Cell cell = new Cell();
-        assertTrue(cell.isAlive());
-    }
-
-    @Test
     public void defaultCellIsDeadWithNoLiveNeighbours() {
-        Cell cell = new Cell(false);
-        cell.evolve();
-        assertFalse(cell.isAlive());    
+        Cell cell = new DeadCell();
+        Cell nextGen = cell.evolve();
+        assertTrue(nextGen instanceof DeadCell);    
     }
     
     @Test
     public void liveCellWithNoLiveNeighboursDies() {
-        Cell cell = new Cell();
+        Cell cell = new LiveCell();
         cell.setLiveNeighbours(0);
-        cell.evolve();
-        assertFalse(cell.isAlive());
+        Cell nextGen = cell.evolve();
+        assertTrue(nextGen instanceof DeadCell);
     }
     
     @Test
     public void liveCellWithTwoLiveNeighboursLives(){
-        Cell cell = new Cell();
+        Cell cell = new LiveCell();
         cell.setLiveNeighbours(2);
-        cell.evolve();
-        assertTrue(cell.isAlive());
+        Cell nextGen = cell.evolve();
+        assertTrue(nextGen instanceof LiveCell);
     }
     
     @Test
     public void liveCellWithFourLiveNeighboursDies(){
-        Cell cell = new Cell();
+        Cell cell = new LiveCell();
         cell.setLiveNeighbours(4);
-        cell.evolve();
-        assertFalse(cell.isAlive());
+        Cell nextGen = cell.evolve();
+        assertTrue(nextGen instanceof DeadCell);
     }
     
     @Test
     public void deadCellWithThreeLiveNeighboursComesToLife(){
-        Cell cell = new Cell(false);
+        Cell cell = new DeadCell();
         cell.setLiveNeighbours(3);
-        cell.evolve();
-        assertTrue(cell.isAlive());
+        Cell nextGen = cell.evolve();
+        assertTrue(nextGen instanceof LiveCell);
     }
     
-        @Test
+    @Test
     public void deadCellWithFourLiveNeighboursStaysDead(){
-        Cell cell = new Cell();
+        Cell cell = new DeadCell();
         cell.setLiveNeighbours(4);
-        cell.evolve();
-        assertFalse(cell.isAlive());
+        Cell nextGen = cell.evolve();
+        assertTrue(nextGen instanceof DeadCell);
     }
 }
 
