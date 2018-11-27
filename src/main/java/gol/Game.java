@@ -1,4 +1,6 @@
 package gol;
+import java.io.PrintStream;
+import java.io.OutputStream;
 
 public class Game {
   private static final String ANSI_CLEARSCREEN = "\u001B[H\u001B[2J\u001B[1m";
@@ -6,14 +8,16 @@ public class Game {
   private int speed_ms;
   private int width;
   private int height;
+  private PrintStream output;
   private World world = new World();
   
   public Game() {
-    speed_ms = DEFAULT_SPEED; 
+    this(System.out, DEFAULT_SPEED);
   }
   
-  public Game(int speed_ms) {
+  public Game(OutputStream out, int speed_ms) {
     this.speed_ms = speed_ms;
+    this.output = new PrintStream(out);
   }
   
   public int width(){
@@ -35,7 +39,7 @@ public class Game {
         width = Integer.parseInt(dimensions.substring(0,1));
         height = Integer.parseInt(dimensions.substring(2,3));
     } catch (NumberFormatException e) {
-        System.out.println(e);
+        output.println("Invalid dimensions");
     }
   }
   
@@ -77,15 +81,15 @@ public class Game {
   
   public void play(int turns) {
     for (int i=0; i < turns; i++) {
-      System.out.println(ANSI_CLEARSCREEN);
-      System.out.println(this.render());
+      output.print(ANSI_CLEARSCREEN);
+      output.print(this.render());
       evolve();
       try {
         Thread.sleep(speed_ms);
       } catch (Exception e) {}
     }
-    System.out.println(ANSI_CLEARSCREEN);
-    System.out.println(this.render());
+    output.print(ANSI_CLEARSCREEN);
+    output.print(this.render());
   }
   
   public void evolve() {

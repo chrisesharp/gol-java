@@ -26,12 +26,17 @@ public class GameMain {
   
   public static void main(String[] args) {
     ArgParser parser = new ArgParser(args);
-    String file = (parser.hasFile()) ? parser.getFile() : "start.txt";
-    int turns = parser.getTurns();
-    int speed = parser.getSpeed();
-    Game game = new Game(speed);
-    game.parse(readFile(file));
-    game.play(turns);
+    if (parser.isValid()) {
+      String file = (parser.hasFile()) ? parser.getFile() : "start.txt";
+      int turns = parser.getTurns();
+      int speed = parser.getSpeed();
+      Game game = new Game(System.out, speed);
+      game.parse(readFile(file));
+      game.play(turns);      
+    } else {
+      parser.printUsage(System.err);
+    }
+
   }
     
 }

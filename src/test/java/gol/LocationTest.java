@@ -14,6 +14,27 @@ public class LocationTest{
     }
     
     @Test
+    public void twoDifferentLocationsAreNotTheSame() {
+        Location loc1 = new Location(0,0);
+        Location loc2 = new Location(0,1);
+        assertFalse(loc1.equals(loc2));
+    }
+    
+    @Test
+    public void twoOtherDifferentLocationsAreNotTheSame() {
+        Location loc1 = new Location(0,0);
+        Location loc2 = new Location(1,0);
+        assertFalse(loc1.equals(loc2));
+    }
+    
+    @Test
+    public void twoDifferentThingsAreNotTheSame() {
+        Location loc1 = new Location(0,0);
+        Object loc2 = new String("0,1");
+        assertFalse(loc1.equals(loc2));
+    }
+    
+    @Test
     public void getSetOfNeighboursForKnownLocation() {
         Set<Location> expected = new HashSet<>();
         Location target = new Location(1,1);

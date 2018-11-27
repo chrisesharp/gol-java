@@ -2,8 +2,12 @@ package gol;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 import org.kohsuke.args4j.Option;
+import java.io.OutputStream;
 
 public class ArgParser {
+  private boolean valid;
+  private CmdLineParser parser;
+  
   @Option(name="-f", aliases="--file", usage="Fully qualified path and name of input txt file.")  
   private String fileName;   
   
@@ -14,14 +18,17 @@ public class ArgParser {
   private int speed = 100;
 
   public ArgParser(String... args) {
-    CmdLineParser parser = new CmdLineParser(this);
+    parser = new CmdLineParser(this);
     try {
       parser.parseArgument(args);
+      this.valid = true;
     } catch (CmdLineException e) {
-      parser.printUsage(System.err);
-      System.err.println(e.getMessage());
-      System.exit(-1);
+      this.valid = false;
     }
+  }
+  
+  public void printUsage(OutputStream out) {
+    parser.printUsage(out);
   }
   
   public String getFile() {
@@ -38,5 +45,9 @@ public class ArgParser {
   
   public int getSpeed() {
     return this.speed;
+  }
+  
+  public boolean isValid() {
+    return valid;
   }
 }
