@@ -5,7 +5,7 @@ public class DeadCell extends Cell {
   
   @Override
   public Cell evolve() {
-    return survive() ? new LiveCell() : this ;
+    return survive() ? Cell.makeLiveCell() : this ;
   }
 
   private boolean survive() {

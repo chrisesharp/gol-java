@@ -5,7 +5,7 @@ public class LiveCell extends Cell {
 
   @Override
   public Cell evolve() {
-    return survive() ? this : new DeadCell() ;
+    return survive() ? this : Cell.makeDeadCell();
   }
 
   private boolean survive() {
@@ -19,5 +19,10 @@ public class LiveCell extends Cell {
   
   public static boolean isIcon(String thisIcon) {
     return icon.equals(thisIcon);
+  }
+  
+  @Override
+  public boolean isAlive() {
+    return true;
   }
 }

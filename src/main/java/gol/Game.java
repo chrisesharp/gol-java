@@ -55,7 +55,7 @@ public class Game {
   }
   
   protected boolean cellAliveAt(Location location) {
-    return world.getCell(location) instanceof LiveCell;
+    return world.getCell(location).isAlive();
   }
   
   public String render() {

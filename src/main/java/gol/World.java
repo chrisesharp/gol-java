@@ -11,18 +11,17 @@ public class World{
   private Map<Location, Cell> birthingCells = new HashMap<>();
   
   public Cell getCell(Location location) {
-    Cell cell = liveCells.get(location);
-    return (cell != null) ? cell : new DeadCell();
+    return Cell.makeCell(liveCells.get(location));
   }
   
   public void addCell(String icon, Location location) {
-    if (LiveCell.isIcon(icon)) {
+    if (Cell.makeCell(icon).isAlive()) {
       addLiveCell(location);
     }
   }
   
   public void addLiveCell(Location location) {
-    liveCells.put(location, new LiveCell());
+    liveCells.put(location, Cell.makeLiveCell());
   }
   
   private void addBirthingCell(Location location, int neighbours) {
@@ -71,7 +70,7 @@ public class World{
               entry.setValue(entry.getValue().evolve());
               return entry;
             })
-            .filter(entry -> entry.getValue() instanceof LiveCell)
+            .filter(entry -> entry.getValue().isAlive())
             .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 }

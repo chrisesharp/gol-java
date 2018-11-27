@@ -8,7 +8,7 @@ public class CellTest {
     public void defaultCellIsDeadWithNoLiveNeighbours() {
         Cell cell = new DeadCell();
         Cell nextGen = cell.evolve();
-        assertTrue(nextGen instanceof DeadCell);    
+        assertFalse(nextGen.isAlive());    
     }
     
     @Test
@@ -16,7 +16,7 @@ public class CellTest {
         Cell cell = new LiveCell();
         cell.setLiveNeighbours(0);
         Cell nextGen = cell.evolve();
-        assertTrue(nextGen instanceof DeadCell);
+        assertFalse(nextGen.isAlive());
     }
     
     @Test
@@ -24,7 +24,7 @@ public class CellTest {
         Cell cell = new LiveCell();
         cell.setLiveNeighbours(2);
         Cell nextGen = cell.evolve();
-        assertTrue(nextGen instanceof LiveCell);
+        assertTrue(nextGen.isAlive());
     }
     
     @Test
@@ -32,7 +32,7 @@ public class CellTest {
         Cell cell = new LiveCell();
         cell.setLiveNeighbours(4);
         Cell nextGen = cell.evolve();
-        assertTrue(nextGen instanceof DeadCell);
+        assertFalse(nextGen.isAlive());
     }
     
     @Test
@@ -40,7 +40,7 @@ public class CellTest {
         Cell cell = new DeadCell();
         cell.setLiveNeighbours(3);
         Cell nextGen = cell.evolve();
-        assertTrue(nextGen instanceof LiveCell);
+        assertTrue(nextGen.isAlive());
     }
     
     @Test
@@ -48,7 +48,7 @@ public class CellTest {
         Cell cell = new DeadCell();
         cell.setLiveNeighbours(4);
         Cell nextGen = cell.evolve();
-        assertTrue(nextGen instanceof DeadCell);
+        assertFalse(nextGen.isAlive());
     }
 }
 
