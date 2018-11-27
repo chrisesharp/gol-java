@@ -28,7 +28,7 @@ public class Game {
       return height;
   }
   
-  public void parse(String input){
+  public void parse(String input) {
     String[] parts = input.split("\n",2);
     parseDimensions(parts[0]);
     parseCells(parts[1]);

@@ -1,6 +1,9 @@
 package gol;
 
 import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -25,6 +28,42 @@ public class GameTest {
       game.play(1);
       String expected = "Invalid dimensions\n1 0\n1 0\n";
       assertEquals(expected, removeANSIControlChars(result.toString()));
+    }
+    
+    @Test
+    public void testMain() {
+      ByteArrayOutputStream result = new ByteArrayOutputStream();
+      List<String> commandArgs = new ArrayList<>();
+      System.setOut(new PrintStream(result));
+      GameMain.main(commandArgs.toArray(new String[0]));
+      System.setOut(System.out);
+      String expected = "1 1\n*\n1 1\n.\n"; 
+      assertEquals(expected, removeANSIControlChars(result.toString()));
+    }
+    
+    @Test
+    public void testMainForUsage() {
+      ByteArrayOutputStream result = new ByteArrayOutputStream();
+      List<String> commandArgs = new ArrayList<>();
+      commandArgs.add("-?");
+      System.setErr(new PrintStream(result));
+      GameMain.main(commandArgs.toArray(new String[0]));
+      System.setErr(System.err);
+      String usage = " -f (--file) VAL : Fully qualified path and name of input txt file. (default:\n                   start.txt)\n";
+      usage += " -s (--speed) N  : Framerate in miliseconds (default: 100)\n";
+      usage += " -t (--turns) N  : Number of turns to run simulation (default: 1)\n";
+      assertEquals(usage, removeANSIControlChars(result.toString()));
+    }
+    
+    @Test
+    public void testFileError() {
+      ByteArrayOutputStream result = new ByteArrayOutputStream();
+      String[] args = {"-f","foo.txt"};
+      System.setErr(new PrintStream(result));
+      GameMain.main(args);
+      System.setErr(System.err);
+      String error = "File error!\n";
+      assertEquals(error, removeANSIControlChars(result.toString()));
     }
     
     private static String removeANSIControlChars(String input) {

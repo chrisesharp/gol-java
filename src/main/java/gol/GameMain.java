@@ -8,18 +8,16 @@ import java.io.IOException;
 public class GameMain {  
   private static String readFile(String filePath) {
     StringBuilder contentBuilder = new StringBuilder();
-    if (filePath.length()>0) {
-      try {
-        Stream<String> stream = Files.lines(
-          Paths.get(filePath), 
-          StandardCharsets.UTF_8);
-        stream.forEach(line -> contentBuilder.append(line).append("\n"));
-        stream.close();
-      }
-      catch (IOException e)
-      {
-        System.err.println(e);
-      }
+    try {
+      Stream<String> stream = Files.lines(
+        Paths.get(filePath), 
+        StandardCharsets.UTF_8);
+      stream.forEach(line -> contentBuilder.append(line).append("\n"));
+      stream.close();
+    }
+    catch (IOException e)
+    {
+      System.err.println("File error!");
     }
     return contentBuilder.toString();
   }
@@ -31,12 +29,13 @@ public class GameMain {
       int turns = parser.getTurns();
       int speed = parser.getSpeed();
       Game game = new Game(System.out, speed);
-      game.parse(readFile(file));
-      game.play(turns);      
+      String input = readFile(file);
+      if (input.length()>0) {
+        game.parse(input);
+        game.play(turns);  
+      }    
     } else {
       parser.printUsage(System.err);
     }
-
-  }
-    
+  }  
 }

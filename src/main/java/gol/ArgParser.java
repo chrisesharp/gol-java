@@ -35,10 +35,6 @@ public class ArgParser {
     return this.fileName;
   }
   
-  public boolean hasFile() {
-    return (this.fileName != null);
-  }
-  
   public int getTurns() {
     return this.turns;
   }
