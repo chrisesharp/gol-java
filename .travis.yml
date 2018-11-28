@@ -8,7 +8,7 @@ matrix:
       script: 
         - make
       after_success:
-        - make coverage-java
+        - make coverage
       cache:
         directories:
         - "$HOME/.m2"
