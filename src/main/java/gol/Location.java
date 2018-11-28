@@ -2,6 +2,7 @@ package gol;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.stream.IntStream;
 
 public class Location{
   public int x,y;
@@ -31,13 +32,13 @@ public class Location{
     int startY = Math.max(0, this.y - 1);
     int endX = this.x + 1;
     int endY = this.y + 1;
-    for (int y = startY; y <= endY; y++) {
-      for (int x = startX; x <= endX; x++) {
-        if (!(x==this.x && y==this.y)) {
-          neighbours.add(new Location(x,y));
-        }
-      }
-    }
+    
+    IntStream.rangeClosed(startY, endY)
+      .forEach(y -> IntStream.rangeClosed(startX, endX)
+      .filter(x -> !(x==this.x && y==this.y))
+      .forEach(x -> neighbours.add(new Location(x,y)))
+    );
+
     return neighbours;
   }
 }
