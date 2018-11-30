@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.stream.Collectors;
+import java.util.Arrays;
 
 public class World{
   private Map<Location, Cell> liveCells = new HashMap<>();
@@ -31,9 +32,7 @@ public class World{
   }
   
   public void addLiveCells(Location[] locationArray) {
-    for(Location loc: locationArray) {
-      addLiveCell(loc);    
-    }
+    Arrays.stream(locationArray).forEach(loc -> addLiveCell(loc));
   }
   
   public void evolve() {
@@ -43,10 +42,12 @@ public class World{
   }
   
   private void evaluateNeighbourhoods() {
-    for (Location location: liveCells.keySet()) {
-      liveCells.get(location).setLiveNeighbours(countLiveNeighbours(location));
-      identifyBirthingNeighbours(location);
-    }
+    liveCells.keySet().stream()
+      .forEach(location -> {
+        liveCells.get(location).setLiveNeighbours(countLiveNeighbours(location));
+        identifyBirthingNeighbours(location);
+      }
+    );
   }
   
   private int countLiveNeighbours(Location location) {
@@ -58,14 +59,13 @@ public class World{
   private void identifyBirthingNeighbours(Location location) {
     Set<Location> intersection = new HashSet<>(location.getNeighbourhood());
     intersection.removeAll(liveCells.keySet());
-    intersection.stream()
-      .forEach(neighbour -> addBirthingCell(neighbour, countLiveNeighbours(neighbour)));
+    intersection.stream().forEach(neighbour -> 
+      addBirthingCell(neighbour, countLiveNeighbours(neighbour)));
   }
   
   private Map<Location, Cell> determineNewPopulation() {
     liveCells.putAll(birthingCells);
-    return liveCells.entrySet()
-            .stream()
+    return liveCells.entrySet().stream()
             .map(entry-> {
               entry.setValue(entry.getValue().evolve());
               return entry;
