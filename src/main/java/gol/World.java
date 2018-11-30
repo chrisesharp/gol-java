@@ -25,7 +25,7 @@ public class World{
   }
   
   private void addBirthingCell(Location location, int neighbours) {
-    Cell cell = new DeadCell();
+    Cell cell = Cell.makeDeadCell();
     cell.setLiveNeighbours(neighbours);
     birthingCells.put(location, cell);
   }

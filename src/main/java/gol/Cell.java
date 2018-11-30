@@ -36,4 +36,5 @@ public abstract class Cell {
   public static Cell makeDeadCell() {
     return new DeadCell();
   }
+
 }

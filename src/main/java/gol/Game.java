@@ -1,6 +1,7 @@
 package gol;
 import java.io.PrintStream;
 import java.io.OutputStream;
+import java.util.stream.IntStream;
 
 public class Game {
   private static final String ANSI_CLEARSCREEN = "\u001B[H\u001B[2J\u001B[1m";
@@ -46,12 +47,12 @@ public class Game {
   
   private void parseCells(String input) {
     String[] rows = input.split("\n");
-    for (int y=0; y < rows.length; y++) {
-      String row = rows[y];
-      for (int x=0; x < row.length(); x++){ 
-        world.addCell(row.substring(x,x+1),new Location(x,y));
-      }
-    }
+    
+    IntStream.range(0, rows.length)
+      .forEach(y -> 
+        IntStream.range(0, rows[y].length())
+          .forEach(x -> world.addCell(rows[y].substring(x,x+1),new Location(x,y)))
+      );
   }
   
   protected boolean cellAliveAt(Location location) {
@@ -67,14 +68,15 @@ public class Game {
   }
   
   private String renderBoard() {
-    String output = "";
-    for (int y=0; y < height; y++) {
-      for (int x=0; x < width; x++){ 
-        output += world.getCell(new Location(x,y));
+    StringBuilder output = new StringBuilder();
+    IntStream.range(0, height)
+      .forEach(y -> {
+        IntStream.range(0, width)
+          .forEach(x -> output.append(world.getCell(new Location(x,y))));
+        output.append("\n");
       }
-      output += "\n";
-    }
-    return output;
+    );
+    return output.toString();
   }
   
   public void play(int turns) {
