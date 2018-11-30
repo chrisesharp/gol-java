@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class GameTest {
     @Test
-    public void play1frame() {
+    public void play1frame()  throws InterruptedException {
       ByteArrayOutputStream result = new ByteArrayOutputStream();
       Game game = new Game(result,1);
       String input = "1 1\n.\n"; 
@@ -20,7 +20,7 @@ public class GameTest {
     }
     
     @Test
-    public void failOnBadInput() {
+    public void failOnBadInput() throws InterruptedException {
       ByteArrayOutputStream result = new ByteArrayOutputStream();
       Game game = new Game(result,1);
       String input = "1 ?\n.\n"; 
@@ -31,7 +31,7 @@ public class GameTest {
     }
     
     @Test
-    public void testMain() {
+    public void testMain()  throws InterruptedException {
       ByteArrayOutputStream result = new ByteArrayOutputStream();
       List<String> commandArgs = new ArrayList<>();
       System.setOut(new PrintStream(result));
@@ -42,7 +42,7 @@ public class GameTest {
     }
     
     @Test
-    public void testMainForUsage() {
+    public void testMainForUsage() throws InterruptedException {
       ByteArrayOutputStream result = new ByteArrayOutputStream();
       List<String> commandArgs = new ArrayList<>();
       commandArgs.add("-?");
@@ -56,7 +56,7 @@ public class GameTest {
     }
     
     @Test
-    public void testFileError() {
+    public void testFileError() throws InterruptedException {
       ByteArrayOutputStream result = new ByteArrayOutputStream();
       String[] args = {"-f","foo.txt"};
       System.setErr(new PrintStream(result));

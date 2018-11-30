@@ -79,14 +79,12 @@ public class Game {
     return output.toString();
   }
   
-  public void play(int turns) {
+  public void play(int turns) throws InterruptedException {
     for (int i=0; i < turns; i++) {
       output.print(ANSI_CLEARSCREEN);
       output.print(this.render());
       evolve();
-      try {
-        Thread.sleep(speed_ms);
-      } catch (Exception e) {}
+      Thread.sleep(speed_ms);
     }
     output.print(ANSI_CLEARSCREEN);
     output.print(this.render());

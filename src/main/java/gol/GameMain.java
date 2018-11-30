@@ -22,7 +22,7 @@ public class GameMain {
     return contentBuilder.toString();
   }
   
-  public static void main(String[] args) {
+  public static void main(String[] args) throws InterruptedException {
     ArgParser parser = new ArgParser(args);
     if (parser.isValid()) {
       String file = parser.getFile();
