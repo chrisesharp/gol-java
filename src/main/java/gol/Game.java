@@ -47,7 +47,6 @@ public class Game {
   
   private void parseCells(String input) {
     String[] rows = input.split("\n");
-    
     IntStream.range(0, rows.length)
       .forEach(y -> 
         IntStream.range(0, rows[y].length())
